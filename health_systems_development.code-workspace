@@ -7,6 +7,12 @@
 		{
 			"name": "PTH8323 Health Systems Repository",
 			"path": "."
+		},
+		{
+			"path": "../PE3565"
+		},
+		{
+			"path": "../scollinspt"
 		}
 	],
 	"settings": {}
