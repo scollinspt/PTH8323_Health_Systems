@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projectPossibilities } from '../../data/projectPossibilities';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const specificPossibilities = projectPossibilities.filter((possibility) => possibility.specific);
+const questionFamilies = projectPossibilities.filter((possibility) => !possibility.specific);
+
+const projectLanes = [
+  ['Investigation', 'Assess whether a need, opportunity, relationship, or intervention is warranted.'],
+  ['Policy', 'Analyze a health policy and develop an advocacy initiative.'],
+  ['Innovation', 'Analyze or develop a sustainable business or physical therapy practice model.'],
+  ['Leadership', 'Investigate or propose a management, partnership, or program development initiative.'],
+  ['Systems', 'Pursue another approved systems-based healthcare analysis or proposal.'],
+];
+
+const projectProcess = [
+  ['Diagnose the system', 'Understand its purpose, structure, actors, incentives, and current behavior.'],
+  ['Identify the problem', 'Define the need or gap, who experiences it, and what may be producing it.'],
+  ['Develop an approach', 'Compare possible interventions and propose a defensible path forward.'],
+  ['Anticipate consequences', 'Use a causal network to reason through intended effects, indirect effects, feedback, and possible unintended consequences.'],
+];
+---
+
+<BaseLayout title="Project Framework · PTH8323 Health Systems" description="Review the PTH8323 Leadership and Transformation Project framework." active="project">
+  <section class="project-band project-page" aria-labelledby="project-title">
+    <div class="section-shell">
+      <div class="project-intro">
+        <div><p class="section-label">Project framework</p><h1 id="project-title">Investigate a consequential question. Build a defensible analysis.</h1></div>
+        <p>Completed individually or in pairs, the semester project connects systems thinking, leadership, sustainability, professional communication, and implementation. A strong project may establish whether a need exists, analyze possible strategies or outcomes, or propose a way forward.</p>
+      </div>
+
+      <div class="project-lanes" aria-label="Project analysis and proposal pathways">
+        {projectLanes.map(([title, description], index) => (
+          <article><span>0{index + 1}</span><h2>{title}</h2><p>{description}</p></article>
+        ))}
+      </div>
+
+      <div class="project-method" aria-labelledby="project-method-title">
+        <div class="method-heading">
+          <p class="section-label">A familiar reasoning process</p>
+          <h2 id="project-method-title">The systems differ. The overall approach will often be familiar.</h2>
+          <p>Most projects will extend reasoning students already use in patient care to a different kind of system.</p>
+        </div>
+        <ol class="method-steps">
+          {projectProcess.map(([title, description], index) => (
+            <li><span>0{index + 1}</span><div><strong>{title}</strong><p>{description}</p></div></li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="systems-range" aria-label="Possible project scale and type">
+        <div class="range-line" aria-hidden="true"><span></span></div>
+        <div><strong>Micro</strong><span>One workflow, procedure, team, or workplace policy</span></div>
+        <div><strong>Macro</strong><span>An organization, market, profession, policy, or healthcare system</span></div>
+        <p>Projects may be social, organizational, operational, or strategic. They may investigate a need, evaluate outcomes or feasibility, analyze sustainability, review a policy, redesign a process, develop a program, examine a partnership, or build a business plan around an identified need, market, or problem.</p>
+      </div>
+
+      <div class="project-expectations">
+        <h2>A strong project connects</h2>
+        <ul>
+          <li>Problem or need analysis</li><li>Methods suited to the question</li>
+          <li>Systems and stakeholder effects</li>
+          <li>Leadership and change management</li><li>Causal network and likely consequences</li>
+          <li>Interprofessional perspective</li><li>Sustainability and implementation</li>
+          <li>Professional presentation and defense</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-possibilities section-shell" aria-labelledby="possibilities-title">
+    <div class="example-label"><p class="section-label">Possible analysis routes</p><span>Real-world questions</span></div>
+    <div class="possibility-heading">
+      <h2 id="possibilities-title">The project can investigate before it recommends.</h2>
+      <p>These concrete opportunities show different questions a systems project could answer. They are possibilities, not assigned topics, and any current partnership or implementation opportunity must be confirmed with the instructor.</p>
+    </div>
+    <div class="possibility-grid">
+      {specificPossibilities.map((possibility) => (
+        <article><span>{possibility.route}</span><h3>{possibility.question}</h3><p>{possibility.detail}</p></article>
+      ))}
+    </div>
+
+    <div class="question-catalog" aria-labelledby="question-catalog-title">
+      <div><p class="section-label">Additional directions</p><h2 id="question-catalog-title">Broader questions can become specific projects.</h2></div>
+      <ol>
+        {questionFamilies.map((possibility) => (
+          <li><span>{possibility.route}</span><h3>{possibility.question}</h3><p>{possibility.detail}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="instructor-example section-shell" aria-labelledby="instructor-example-title">
+    <div class="example-label"><p class="section-label">A systems project in practice</p><span>Instructor example</span></div>
+    <div class="example-story">
+      <h2 id="instructor-example-title">Building the PSU DPT program began with problems in physical therapy education.</h2>
+      <p>When I founded the program, I saw an opportunity to design a doctoral culture from the beginning rather than inherit the strong undergraduate culture present in many programs that had evolved from earlier degree models. That meant making students' progression toward lifelong, self-directed learning and reflective practice explicit while designing policies and practices around their needs at each stage of development.</p>
+      <p>I also identified a need for more hands-on preparation before clinical rotations and for a more explicit way to reason about causation. My developing response connected causal reasoning with sequential mentorship and a staged pro bono clinical requirement, giving students increasing responsibility as they prepared for clinical practice.</p>
+      <p class="example-takeaway"><strong>The point is not the particular solution.</strong> It is the process of diagnosing an educational system, identifying needs, designing connected interventions, implementing them, and considering how those interventions would influence students, faculty, clinical partners, patients, and the program over time.</p>
+    </div>
+  </section>
+
+  <aside class="authority-note section-shell" aria-label="Project guidance boundary">
+    <strong>Project guidance</strong>
+    <div><p>The syllabus, Canvas, and in-class instructions remain the authoritative sources for project requirements, deadlines, submissions, and grading.</p><a class="primary-action" href={`${base}project/ideas/`}>Continue to Project Ideas <span aria-hidden="true">→</span></a></div>
+  </aside>
+</BaseLayout>

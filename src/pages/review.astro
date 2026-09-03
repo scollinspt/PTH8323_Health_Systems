@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const reviewDomains = [
+  'Healthcare delivery and access',
+  'Payment, insurance, and reimbursement',
+  'Regulation, policy, and advocacy',
+  'Leadership and organizational change',
+  'Quality, management, and systems analysis',
+  'Population health and professional responsibility',
+];
+---
+
+<BaseLayout
+  title="Scenario Review · PTH8323 Health Systems"
+  description="Planned scenario-based review for applying PTH8323 health systems concepts to difficult professional decisions."
+  active="review"
+>
+  <section class="review-page-hero section-shell" aria-labelledby="review-page-title">
+    <div>
+      <p class="section-label">Scenario Review</p>
+      <h1 id="review-page-title">Practice decisions in systems, not isolated facts.</h1>
+    </div>
+    <div class="review-page-summary">
+      <p>These question sets will use difficult, realistic situations to practice interpreting healthcare environments and selecting or defending the most supportable action.</p>
+      <p class="status-note"><span aria-hidden="true"></span><strong>Planned</strong> · Public formative scenarios will be developed separately from secure course assessments.</p>
+    </div>
+  </section>
+
+  <section class="review-process" aria-labelledby="review-process-title">
+    <div class="section-shell">
+      <p class="section-label">The review approach</p>
+      <h2 id="review-process-title">Reason through the case.</h2>
+      <ol>
+        <li><span>01</span><div><strong>Interpret the situation</strong><p>Identify the system, stakeholders, constraints, incentives, and decision that matter.</p></div></li>
+        <li><span>02</span><div><strong>Choose and defend</strong><p>Select the most supportable response and distinguish it from plausible but limited alternatives.</p></div></li>
+        <li><span>03</span><div><strong>Trace the consequences</strong><p>Consider causal pathways, indirect effects, feedback, and what remains uncertain.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="review-domains section-shell" aria-labelledby="review-domains-title">
+    <div>
+      <p class="section-label">Initial scope</p>
+      <h2 id="review-domains-title">Cases will integrate the major systems domains.</h2>
+    </div>
+    <ul>
+      {reviewDomains.map((domain) => <li>{domain}</li>)}
+    </ul>
+  </section>
+
+  <aside class="authority-note section-shell" aria-label="Assessment boundary">
+    <strong>Formative practice</strong>
+    <p>Scenario Review will support course and NPTE-relevant reasoning, but it will not reproduce secure quiz or examination items or predict an examination grade.</p>
+  </aside>
+</BaseLayout>

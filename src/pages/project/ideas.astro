@@ -1,0 +1,435 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projectPossibilities } from '../../data/projectPossibilities';
+
+const possibilityData = JSON.stringify(projectPossibilities).replace(/</g, '\\u003c');
+
+const experienceSources = [
+  ['personal', 'Personal or family healthcare', 'An experience receiving, arranging, paying for, or navigating care.'],
+  ['observation', 'Observation before PT school', 'Physical therapy observation, volunteering, or another early view of practice.'],
+  ['clinical-one', 'First full-time clinical rotation', 'A system, workflow, policy, team, or patient experience that stayed with you.'],
+  ['clinical-two', 'Second full-time clinical rotation', 'Something you saw work differently, particularly well, or not as it should.'],
+  ['pro-bono', 'Pro bono practice', 'An experience providing care through a student-led or community service setting.'],
+  ['employment', 'Employment', 'Work in healthcare, service, business, education, or another field.'],
+  ['coursework', 'Coursework', 'A question or system encountered through this or another course.'],
+  ['community', 'Community experience', 'Participation in a community, civic, volunteer, or public-health setting.'],
+  ['other', 'Another setting', 'A setting not represented above.'],
+];
+
+const patterns = [
+  ['access', 'Access, delay, or a failed pathway to care'],
+  ['coordination', 'Coordination, communication, or handoffs'],
+  ['policy', 'A policy, procedure, or regulation that shaped what happened'],
+  ['payment', 'Payment, insurance, authorization, or reimbursement'],
+  ['workflow', 'A workflow that created burden, waste, or missed opportunities'],
+  ['workforce', 'Staffing, roles, workload, or use of professional capabilities'],
+  ['fit', 'A system that did not fit the realities of a patient, family, or community'],
+  ['quality', 'Quality, safety, variation, or accountability'],
+  ['culture', 'Leadership, culture, learning, or resistance to change'],
+  ['technology', 'Technology or information that helped, failed, or was missing'],
+  ['prevention', 'A missed opportunity for prevention or population health'],
+  ['possibility', 'Something that worked unusually well and could be sustained or extended'],
+];
+
+const scales = [
+  ['micro', 'Close to practice', 'A procedure, workflow, team, service, or workplace policy.'],
+  ['organizational', 'Across an organization', 'A program, department, partnership, business model, or organizational policy.'],
+  ['macro', 'Across a larger system', 'A market, profession, community, payer, regulation, or public policy.'],
+  ['open', 'I am not sure yet', 'Keep more than one level of the system in view.'],
+];
+
+const approaches = [
+  ['investigate', 'Investigate whether a need, opportunity, or relationship exists'],
+  ['evaluate', 'Analyze outcomes, feasibility, sustainability, or likely effects'],
+  ['diagnose', 'Understand why the current pattern occurs'],
+  ['improve', 'Improve a policy, procedure, workflow, or service'],
+  ['program', 'Develop a program or coordinated response'],
+  ['business', 'Build a business plan or new practice model around an unmet need'],
+  ['advocacy', 'Review policy and develop an advocacy approach'],
+  ['leadership', 'Address leadership, culture, roles, or organizational change'],
+  ['open', 'Remain open while discussing possibilities'],
+];
+
+const methods = [
+  ['qualitative', 'Qualitative inquiry', 'Interviews, focus groups, observation, or thematic analysis.'],
+  ['quantitative', 'Quantitative analysis', 'Counts, surveys, outcomes, utilization, financial, or other numerical data.'],
+  ['mixed', 'Mixed methods', 'A purposeful combination of qualitative and quantitative evidence.'],
+  ['evidence', 'Evidence or literature review', 'Synthesize existing research, guidance, and comparable models.'],
+  ['needs', 'Needs assessment', 'Examine population need, service gaps, demand, assets, and stakeholder perspectives.'],
+  ['market', 'Market or environmental analysis', 'Examine demand, competitors, partners, context, and feasibility.'],
+  ['financial', 'Financial analysis', 'Examine costs, revenue, reimbursement, pricing, and sustainability.'],
+  ['policy-analysis', 'Policy or regulatory analysis', 'Examine policy language, incentives, constraints, and likely effects.'],
+];
+
+const interests = [
+  ['rural', 'Rural health and access'],
+  ['community-health', 'Community and population health'],
+  ['healthy-aging', 'Healthy aging and older adults'],
+  ['maternal', 'Maternal and postpartum health'],
+  ['cardiopulmonary', 'Cardiopulmonary rehabilitation'],
+  ['outdoor-wellness', 'Active outdoor wellness'],
+  ['athletic-training', 'Athletic training and sports medicine'],
+  ['education-workforce', 'Education and workforce development'],
+  ['practice-business', 'Practice and business models'],
+  ['care-delivery', 'Care delivery and quality'],
+  ['technology', 'Technology-enabled care'],
+  ['policy', 'Policy and reimbursement'],
+];
+
+const developmentDirections = [
+  ['business-plan', 'Business plan'],
+  ['for-profit', 'For-profit model'],
+  ['nonprofit', 'Nonprofit model'],
+  ['financial-model', 'Financial model'],
+  ['program-evaluation', 'Program evaluation plan'],
+  ['implementation', 'Implementation or change plan'],
+  ['partnership', 'Organizational partnership model'],
+  ['advocacy-plan', 'Policy or advocacy strategy'],
+  ['open-development', 'Remain open to the eventual form'],
+];
+---
+
+<BaseLayout title="Project Ideas · PTH8323 Health Systems" description="Use experiences with healthcare and physical therapy to identify systems questions and possible project directions." active="project">
+  <section class="ideas-tool section-shell" aria-labelledby="ideas-tool-title" data-ideas-tool>
+    <header class="ideas-tool-header">
+      <div>
+        <p class="section-label">Project Studio · Project Ideas</p>
+        <h1 id="ideas-tool-title">Begin with experience, not a topic list.</h1>
+      </div>
+      <p>Recall what you have encountered, notice the system beneath the situation, and leave with starting territory for conversation.</p>
+    </header>
+
+    <div class="ideas-boundary">
+      <strong>Your experiences remain yours.</strong>
+      <p>Do not enter names or details that could identify a patient, family member, clinician, organization, or clinical site. Responses stay in this browser tab unless you intentionally download the brief for Canvas.</p>
+    </div>
+
+    <div class="ideas-progress" aria-label="Activity progress">
+      <span data-progress-text>Step 1 of 5</span>
+      <div><i data-progress-bar></i></div>
+    </div>
+
+    <form data-ideas-form>
+      <section class="ideas-step" data-step="0" aria-labelledby="step-one-title">
+        <p class="step-kicker">Look back</p>
+        <fieldset>
+          <legend id="step-one-title" tabindex="-1">Where have you encountered something worth examining?</legend>
+          <p class="step-instruction">Choose any sources that bring a situation to mind. You do not need to describe the situation yet.</p>
+          <div class="reflection-options">
+            {experienceSources.map(([value, label, description]) => (
+              <label><input type="checkbox" name="source" value={value} data-label={label} /><span><strong>{label}</strong><small>{description}</small></span></label>
+            ))}
+          </div>
+          <label class="reflection-note other-setting" data-other-setting hidden><strong>What was the other setting?</strong><span>Name the type of setting without identifying a person, organization, or clinical site.</span><input type="text" name="otherDetail" autocomplete="off" /></label>
+        </fieldset>
+      </section>
+
+      <section class="ideas-step" data-step="1" aria-labelledby="step-two-title" hidden>
+        <p class="step-kicker">Notice the pattern</p>
+        <fieldset>
+          <legend id="step-two-title" tabindex="-1">What made the situation stay with you?</legend>
+          <p class="step-instruction">Choose the system patterns that seem most important. A useful project may begin with something that failed, something that created friction, or something that worked unusually well.</p>
+          <div class="pattern-options">
+            {patterns.map(([value, label]) => (
+              <label><input type="checkbox" name="pattern" value={value} data-label={label} /><span>{label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <label class="reflection-note"><strong>What do you keep wondering about?</strong><span>Optional. Describe the question without identifiable details.</span><textarea name="wonder" rows="4" placeholder="I keep wondering why..."></textarea></label>
+      </section>
+
+      <section class="ideas-step" data-step="2" aria-labelledby="step-three-title" hidden>
+        <p class="step-kicker">Locate the system</p>
+        <fieldset>
+          <legend id="step-three-title" tabindex="-1">At what level might you want to work?</legend>
+          <p class="step-instruction">Choose the closest starting point. A project may connect more than one level.</p>
+          <div class="reflection-options scale-options">
+            {scales.map(([value, label, description]) => (
+              <label><input type="radio" name="scale" value={value} data-label={label} /><span><strong>{label}</strong><small>{description}</small></span></label>
+            ))}
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="ideas-step" data-step="3" aria-labelledby="step-four-title" hidden>
+        <p class="step-kicker">Consider the work</p>
+        <fieldset>
+          <legend id="step-four-title" tabindex="-1">What kind of work sounds worth exploring?</legend>
+          <p class="step-instruction">Choose any approaches you would be willing to discuss. You are not choosing a final project form.</p>
+          <div class="pattern-options approach-options">
+            {approaches.map(([value, label]) => (
+              <label><input type="checkbox" name="approach" value={value} data-label={label} /><span>{label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="ideas-step" data-step="4" aria-labelledby="step-five-title" hidden>
+        <p class="step-kicker">Plan the inquiry</p>
+        <fieldset>
+          <legend id="step-five-title" tabindex="-1">How might you investigate or develop the idea?</legend>
+          <p class="step-instruction">Choose any methods and development forms you would be willing to use. These choices can change as the question becomes clearer.</p>
+          <h2 class="choice-group-title">Contexts you would be willing to explore</h2>
+          <div class="pattern-options interest-options">
+            {interests.map(([value, label]) => (
+              <label><input type="checkbox" name="interest" value={value} data-label={label} /><span>{label}</span></label>
+            ))}
+          </div>
+          <h2 class="choice-group-title">Methods you might use</h2>
+          <div class="reflection-options method-options">
+            {methods.map(([value, label, description]) => (
+              <label><input type="checkbox" name="method" value={value} data-label={label} /><span><strong>{label}</strong><small>{description}</small></span></label>
+            ))}
+          </div>
+          <h2 class="choice-group-title">Forms the work might take</h2>
+          <div class="pattern-options development-options">
+            {developmentDirections.map(([value, label]) => (
+              <label><input type="checkbox" name="development" value={value} data-label={label} /><span>{label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+      </section>
+
+      <div class="ideas-controls">
+        <button type="button" class="secondary-action" data-back hidden>Back</button>
+        <button type="button" class="primary-action" data-next>Continue <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+
+    <section class="ideas-result" data-result aria-labelledby="result-title" hidden>
+      <p class="step-kicker">Your starting territory</p>
+      <h2 id="result-title" tabindex="-1">Bring these observations into conversation.</h2>
+      <p>This is not a topic assignment or an approved proposal. It is a record of where your attention is pointing now.</p>
+
+      <dl class="result-summary">
+        <div><dt>Experience sources</dt><dd data-result-sources></dd></div>
+        <div><dt>Patterns that matter</dt><dd data-result-patterns></dd></div>
+        <div><dt>Possible scale</dt><dd data-result-scale></dd></div>
+        <div><dt>Work worth exploring</dt><dd data-result-approaches></dd></div>
+        <div><dt>Contexts of interest</dt><dd data-result-interests></dd></div>
+        <div><dt>Possible methods</dt><dd data-result-methods></dd></div>
+        <div><dt>Possible development forms</dt><dd data-result-development></dd></div>
+      </dl>
+
+      <section class="project-suggestions" data-suggestions hidden aria-labelledby="suggestions-title">
+        <p class="step-kicker">Possible connections</p>
+        <h3 id="suggestions-title">Your responses may connect with these available questions.</h3>
+        <p>These are transparent prompts for discussion, not assignments or approvals.</p>
+        <div data-suggestion-list></div>
+      </section>
+
+      <div class="causal-prompts">
+        <h3>Questions that could move this toward a project</h3>
+        <ol>
+          <li>What need is not being resolved, or what valuable outcome could be extended?</li>
+          <li>What structures, incentives, relationships, or assumptions may be producing the current pattern?</li>
+          <li>Who experiences the consequences, and whose perspective is still missing?</li>
+          <li>If one part changed, what else might change through the causal network?</li>
+        </ol>
+      </div>
+
+      <p class="result-wonder" data-result-wonder hidden></p>
+      <div class="ideas-controls result-controls">
+        <button type="button" class="secondary-action" data-revise>Revise responses</button>
+        <button type="button" class="primary-action" data-copy>Copy discussion brief</button>
+        <button type="button" class="secondary-action" data-download>Download for Canvas</button>
+        <button type="button" class="text-button" data-reset>Start over</button>
+      </div>
+      <p class="copy-status" data-copy-status role="status"></p>
+    </section>
+  </section>
+</BaseLayout>
+
+<script type="application/json" data-possibility-rules set:html={possibilityData} is:inline></script>
+
+<script>
+  import type { ProjectPossibility, ProjectSignalCategory } from '../../data/projectPossibilities';
+
+  type MatchedPossibility = ProjectPossibility & { matches: ProjectSignalCategory[]; score: number };
+
+  const form = document.querySelector<HTMLFormElement>('[data-ideas-form]');
+  const steps = [...document.querySelectorAll<HTMLElement>('[data-step]')];
+  const result = document.querySelector<HTMLElement>('[data-result]');
+  const storageKey = 'pth8323-project-ideas';
+  let currentStep = 0;
+
+  const possibilityRules = JSON.parse(document.querySelector('[data-possibility-rules]')?.textContent ?? '[]') as ProjectPossibility[];
+  const suggestionCategoryLabels: Record<ProjectSignalCategory, string> = { source: 'experience sources', pattern: 'system patterns', scale: 'system scale', approach: 'work you want to explore', interest: 'contexts of interest', method: 'possible methods', development: 'development forms' };
+
+  function selectedInputs(name: string) {
+    return [...document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)];
+  }
+
+  function valuesFor(name: string) {
+    return selectedInputs(name).map((input) => input.value);
+  }
+
+  function showStep(nextStep: number) {
+    currentStep = nextStep;
+    steps.forEach((step, index) => { step.hidden = index !== currentStep; });
+    result!.hidden = true;
+    form!.hidden = false;
+    document.querySelector<HTMLElement>('[data-back]')!.hidden = currentStep === 0;
+    document.querySelector<HTMLElement>('[data-next]')!.innerHTML = currentStep === steps.length - 1 ? 'Create discussion brief <span aria-hidden="true">→</span>' : 'Continue <span aria-hidden="true">→</span>';
+    document.querySelector<HTMLElement>('[data-progress-text]')!.textContent = `Step ${currentStep + 1} of ${steps.length}`;
+    document.querySelector<HTMLElement>('[data-progress-bar]')!.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+    steps[currentStep].querySelector<HTMLElement>('legend')?.focus();
+  }
+
+  function textFor(name: string, fallback: string) {
+    const selected = selectedInputs(name).map((input) => input.dataset.label ?? input.value);
+    return selected.length ? selected.join(' · ') : fallback;
+  }
+
+  function otherSettingDetail() {
+    const selected = form!.querySelector<HTMLInputElement>('input[name="source"][value="other"]')?.checked ?? false;
+    const detail = form!.querySelector<HTMLInputElement>('[name="otherDetail"]')?.value.trim() ?? '';
+    return selected ? detail : '';
+  }
+
+  function experienceText() {
+    const sources = textFor('source', 'Still open');
+    return otherSettingDetail() ? `${sources} (${otherSettingDetail()})` : sources;
+  }
+
+  function save() {
+    const data = {
+      source: valuesFor('source'), pattern: valuesFor('pattern'), scale: valuesFor('scale'),
+      approach: valuesFor('approach'), interest: valuesFor('interest'), method: valuesFor('method'), development: valuesFor('development'),
+      otherDetail: form!.querySelector<HTMLInputElement>('[name="otherDetail"]')?.value ?? '',
+      wonder: form!.querySelector<HTMLTextAreaElement>('[name="wonder"]')?.value ?? '', currentStep,
+    };
+    sessionStorage.setItem(storageKey, JSON.stringify(data));
+  }
+
+  function restore() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey) ?? 'null');
+      if (!saved) return;
+      ['source', 'pattern', 'scale', 'approach', 'interest', 'method', 'development'].forEach((name) => {
+        (saved[name] ?? []).forEach((value: string) => {
+          const input = form!.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
+          if (input) input.checked = true;
+        });
+      });
+      const wonder = form!.querySelector<HTMLTextAreaElement>('[name="wonder"]');
+      if (wonder) wonder.value = saved.wonder ?? '';
+      const otherDetail = form!.querySelector<HTMLInputElement>('[name="otherDetail"]');
+      if (otherDetail) otherDetail.value = saved.otherDetail ?? '';
+      currentStep = Math.min(saved.currentStep ?? 0, steps.length - 1);
+    } catch { sessionStorage.removeItem(storageKey); }
+  }
+
+  function updateOtherSetting() {
+    const selected = form!.querySelector<HTMLInputElement>('input[name="source"][value="other"]')?.checked ?? false;
+    const wrapper = form!.querySelector<HTMLElement>('[data-other-setting]')!;
+    const detail = wrapper.querySelector<HTMLInputElement>('input')!;
+    wrapper.hidden = !selected;
+    detail.required = selected;
+  }
+
+  function projectSuggestions(): MatchedPossibility[] {
+    const categories: ProjectSignalCategory[] = ['source', 'pattern', 'scale', 'approach', 'interest', 'method', 'development'];
+    return possibilityRules.map((rule) => {
+      const matches = categories.filter((category) => (rule.signals[category] ?? []).some((value) => valuesFor(category).includes(value)));
+      const score = matches.length + (matches.includes('interest') ? 2 : 0);
+      return { ...rule, matches, score };
+    }).filter((rule) =>
+      rule.matches.length >= 3
+      && rule.matches.some((match) => match === 'pattern' || match === 'interest')
+      && rule.matches.includes('approach')
+      && rule.matches.some((match) => match === 'method' || match === 'development')
+    ).sort((left, right) => right.score - left.score || Number(right.specific) - Number(left.specific)).slice(0, 2);
+  }
+
+  function suggestionText() {
+    return projectSuggestions().map((suggestion) => `${suggestion.title} - aligned through ${suggestion.matches.map((match) => suggestionCategoryLabels[match]).join(', ')}`);
+  }
+
+  function showResult() {
+    save();
+    form!.hidden = true;
+    result!.hidden = false;
+    document.querySelector<HTMLElement>('[data-progress-text]')!.textContent = 'Discussion brief';
+    document.querySelector<HTMLElement>('[data-progress-bar]')!.style.width = '100%';
+    document.querySelector<HTMLElement>('[data-result-sources]')!.textContent = experienceText();
+    document.querySelector<HTMLElement>('[data-result-patterns]')!.textContent = textFor('pattern', 'Still open');
+    document.querySelector<HTMLElement>('[data-result-scale]')!.textContent = textFor('scale', 'More than one level may matter');
+    document.querySelector<HTMLElement>('[data-result-approaches]')!.textContent = textFor('approach', 'Open to discussion');
+    document.querySelector<HTMLElement>('[data-result-interests]')!.textContent = textFor('interest', 'Open to discussion');
+    document.querySelector<HTMLElement>('[data-result-methods]')!.textContent = textFor('method', 'Open to discussion');
+    document.querySelector<HTMLElement>('[data-result-development]')!.textContent = textFor('development', 'Open to discussion');
+    const suggestions = projectSuggestions();
+    const suggestionSection = document.querySelector<HTMLElement>('[data-suggestions]')!;
+    const suggestionList = document.querySelector<HTMLElement>('[data-suggestion-list]')!;
+    suggestionSection.hidden = suggestions.length === 0;
+    suggestionList.replaceChildren(...suggestions.map((suggestion) => {
+      const article = document.createElement('article');
+      const title = document.createElement('h4');
+      const detail = document.createElement('p');
+      const reason = document.createElement('small');
+      title.textContent = suggestion.title;
+      detail.textContent = suggestion.detail;
+      reason.textContent = `Why it appeared: alignment across ${suggestion.matches.map((match) => suggestionCategoryLabels[match]).join(', ')}.`;
+      article.append(title, detail, reason);
+      return article;
+    }));
+    const wonder = form!.querySelector<HTMLTextAreaElement>('[name="wonder"]')?.value.trim() ?? '';
+    const wonderOutput = document.querySelector<HTMLElement>('[data-result-wonder]')!;
+    wonderOutput.hidden = !wonder;
+    wonderOutput.textContent = wonder ? `Question I keep returning to: ${wonder}` : '';
+    document.querySelector<HTMLElement>('#result-title')?.focus();
+  }
+
+  function discussionBrief() {
+    const wonder = form!.querySelector<HTMLTextAreaElement>('[name="wonder"]')?.value.trim();
+    return [
+      'PTH8323 Project Ideas - Discussion Brief', '',
+      `Experience sources: ${experienceText()}`,
+      `Patterns that matter: ${textFor('pattern', 'Still open')}`,
+      `Possible scale: ${textFor('scale', 'More than one level may matter')}`,
+      `Work worth exploring: ${textFor('approach', 'Open to discussion')}`,
+      `Contexts of interest: ${textFor('interest', 'Open to discussion')}`,
+      `Possible methods: ${textFor('method', 'Open to discussion')}`,
+      `Possible development forms: ${textFor('development', 'Open to discussion')}`,
+      wonder ? `Question I keep returning to: ${wonder}` : '', '',
+      ...suggestionText().map((suggestion) => `Possible connection: ${suggestion}`),
+      projectSuggestions().length ? 'These connections are discussion prompts, not assignments or approvals.' : '', '',
+      'Questions to discuss:',
+      '- What need is not being resolved, or what valuable outcome could be extended?',
+      '- What may be producing the current pattern?',
+      '- Who experiences the consequences, and whose perspective is missing?',
+      '- If one part changed, what else might change through the causal network?',
+    ].filter((line) => line !== '').join('\n');
+  }
+
+  restore();
+  updateOtherSetting();
+  showStep(currentStep);
+  form?.addEventListener('change', () => { updateOtherSetting(); save(); });
+  form?.addEventListener('input', save);
+  document.querySelector('[data-next]')?.addEventListener('click', () => {
+    if (currentStep === 0 && !form!.reportValidity()) return;
+    currentStep < steps.length - 1 ? showStep(currentStep + 1) : showResult();
+  });
+  document.querySelector('[data-back]')?.addEventListener('click', () => showStep(Math.max(0, currentStep - 1)));
+  document.querySelector('[data-revise]')?.addEventListener('click', () => showStep(steps.length - 1));
+  document.querySelector('[data-reset]')?.addEventListener('click', () => { form?.reset(); updateOtherSetting(); sessionStorage.removeItem(storageKey); showStep(0); });
+  document.querySelector('[data-copy]')?.addEventListener('click', async () => {
+    const status = document.querySelector<HTMLElement>('[data-copy-status]')!;
+    try { await navigator.clipboard.writeText(discussionBrief()); status.textContent = 'Discussion brief copied.'; }
+    catch { status.textContent = 'Copy was unavailable. Select and copy the brief above.'; }
+  });
+  document.querySelector('[data-download]')?.addEventListener('click', () => {
+    const file = new Blob([discussionBrief()], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `PTH8323-project-ideas-${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    requestAnimationFrame(() => URL.revokeObjectURL(url));
+    document.querySelector<HTMLElement>('[data-copy-status]')!.textContent = 'Discussion brief downloaded for Canvas.';
+  });
+</script>

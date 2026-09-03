@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+
+<BaseLayout title="Project Studio · PTH8323 Health Systems" description="Review the PTH8323 project framework, then explore possible project directions grounded in experience." active="project">
+  <section class="studio-gateway section-shell" aria-labelledby="studio-title">
+    <div class="studio-gateway-intro">
+      <p class="section-label">Project Studio</p>
+      <h1 id="studio-title">Understand the project. Then explore what you have noticed.</h1>
+      <p>Begin with the framework so you know what a systems project can become. Then use your healthcare, educational, employment, community, pro bono, and clinical experiences to identify problems, needs, and possibilities worth discussing.</p>
+    </div>
+
+    <div class="studio-paths">
+      <article class="studio-path-primary">
+        <p class="option-status">Start here</p>
+        <span class="path-number">01</span>
+        <h2>Review the Project Framework</h2>
+        <p>See the analysis and proposal pathways, real-world project possibilities, familiar reasoning process, micro-to-macro scope, and causal-network expectation.</p>
+        <a class="primary-action light-action" href={`${base}project/framework/`}>Review the framework <span aria-hidden="true">→</span></a>
+      </article>
+      <article>
+        <p class="option-status">Then continue</p>
+        <span class="path-number">02</span>
+        <h2>Explore Project Ideas</h2>
+        <p>Recall situations that stayed with you, notice the system patterns beneath them, and narrow toward questions you could investigate or directions you could propose.</p>
+        <a class="option-link" href={`${base}project/ideas/`}>Begin exploring <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </section>
+
+  <aside class="authority-note section-shell" aria-label="Project information boundary">
+    <strong>Exploration, not selection</strong>
+    <p>The Studio helps you prepare ideas for conversation. It does not approve a topic, assign a partner, or create the proposal for you.</p>
+  </aside>
+</BaseLayout>
